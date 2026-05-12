@@ -40,7 +40,7 @@ Enter the master password when prompted:
 Master password: ________
 ```
 
-Default master password is `secure123`. Change this in the code for production use.
+Default master password is `achyut123`. Change this in the code for production use.
 
 ### Menu Options
 
@@ -96,7 +96,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Example Workflow
 
 ```
-Master password: secure123
+Master password: achyut123
 Authentication successful!
 
 Options: [view] Show passwords  [add] Save password  [quit] Exit
