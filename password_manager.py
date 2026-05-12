@@ -4,39 +4,44 @@ import getpass
 import platform
 
 PASSWORD_FILE = "passwords.txt"
-MASTER_PASSWORD = "secure123"
+MASTER_PASSWORD = "achyut123"  # Change this to a secure master password
 
 
 def get_masked_password(prompt="Password: "):
     """Get password input with asterisks displayed for each character."""
-    if platform.system() == "Windows":
-        import msvcrt
-        password = ""
-        sys.stdout.write(prompt)
-        sys.stdout.flush()
-        
-        while True:
-            char = msvcrt.getch()
-            if char in (b'\r', b'\n'):
-                print()
-                break
-            elif char == b'\x08':  # Backspace
-                if password:
-                    password = password[:-1]
-                    sys.stdout.write('\b \b')
-                    sys.stdout.flush()
-            else:
-                try:
-                    password += char.decode('utf-8')
-                    sys.stdout.write('*')
-                    sys.stdout.flush()
-                except:
-                    pass
-        
-        return password
-    else:
-        # Fallback for non-Windows systems
-        return getpass.getpass(prompt)
+    try:
+        # Try Windows-specific method first
+        if platform.system() == "Windows":
+            import msvcrt
+            password = ""
+            sys.stdout.write(prompt)
+            sys.stdout.flush()
+            
+            while True:
+                char = msvcrt.getch()
+                if char in (b'\r', b'\n'):
+                    print()
+                    break
+                elif char == b'\x08':  # Backspace
+                    if password:
+                        password = password[:-1]
+                        sys.stdout.write('\b \b')
+                        sys.stdout.flush()
+                else:
+                    try:
+                        password += char.decode('utf-8')
+                        sys.stdout.write('*')
+                        sys.stdout.flush()
+                    except:
+                        pass
+            
+            return password
+    except (ImportError, AttributeError):
+        # Fallback for environments where msvcrt doesn't work (like VS Code terminal)
+        pass
+    
+    # Fallback for non-Windows systems or when msvcrt fails
+    return getpass.getpass(prompt)
 
 
 def ensure_password_file():
